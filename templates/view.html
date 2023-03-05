@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Все записи</title>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+        <th scope="col">name</th>
+      <th scope="col">recommend price</th>
+      <th scope="col">url1</th>
+      <th scope="col">url2</th>
+      <th scope="col">url3</th>
+      <th scope="col">url4</th>
+      <th scope="col">my url</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in info.items %}
+    <tr>
+        <td scope="row" ><a href="/editNote/{{i.id}}">{{i.id}}</a></td>
+        <td scope="row">{{i.name}}</td>
+        <td scope="row">{{i.recommend_price}}</td>
+        <td scope="row"><a href="/priceList/{{i.url_1.id}}">{{i.url1}}</a><br>{{i.url_1.price}} руб.</td>
+        <td scope="row"><a href="/priceList/{{i.url_2.id}}">{{i.url2}}</a><br>{{i.url_2.price}} руб.</td>
+        <td scope="row"><a href="/priceList/{{i.url_3.id}}">{{i.url3}}</a><br>{{i.url_3.price}} руб.</td>
+        <td scope="row"><a href="/priceList/{{i.url_4.id}}">{{i.url4}}</a><br>{{i.url_4.price}} руб.</td>
+        <td scope="row">{{i.my_url}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a name="go_ahead" class="btn btn-primary" type="button" href="/addNote">Добавить новую запись</a>
+    </div>
+    <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if not info.has_prev %} disabled {% endif %}">
+      <a class="page-link" href="/view/{{info.prev_num}}">Previous</a>
+    </li>
+
+    {% for i in info.iter_pages()%}
+    <li class="page-item {% if i == info.page %} active {% endif %}" aria-current="page">
+      <a class="page-link" href="/view/{{ i }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+    <li class="page-item {% if not info.has_next %} disabled {% endif %}">
+      <a class="page-link" href="/view/{{info.next_num}}">Next</a>
+    </li>
+  </ul>
+</nav>
+</form>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
