@@ -103,10 +103,12 @@ def editNote(id):
         row = Listing.query.filter(Listing.id == id).first()
         if request.method == 'POST':
             row.name = request.form['name']
+            row.recommend_price = request.form['rp']
             row.url1 = request.form['url1']
             row.url2 = request.form['url2']
             row.url3 = request.form['url3']
             row.url4 = request.form['url4']
+            row.my_url = request.form['my_url']
             db.session.commit()
             return redirect(url_for('editNote', id=row.id))
         return render_template('editNote.html', info=row)
