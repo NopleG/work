@@ -13,7 +13,7 @@
     <tr>
       <th scope="col">id</th>
         <th scope="col">name</th>
-      <th scope="col">recommend price</th>
+      <th scope="col">РРЦ</th>
       <th scope="col">url1</th>
       <th scope="col">url2</th>
       <th scope="col">url3</th>
@@ -26,12 +26,12 @@
     <tr>
         <td scope="row" ><a href="/editNote/{{i.id}}">{{i.id}}</a></td>
         <td scope="row">{{i.name}}</td>
-        <td scope="row">{{i.recommend_price}}</td>
-        <td scope="row"><a href="/priceList/{{i.url_1.id}}">{{i.url1}}</a><br>{{i.url_1.price}} руб.</td>
-        <td scope="row"><a href="/priceList/{{i.url_2.id}}">{{i.url2}}</a><br>{{i.url_2.price}} руб.</td>
-        <td scope="row"><a href="/priceList/{{i.url_3.id}}">{{i.url3}}</a><br>{{i.url_3.price}} руб.</td>
-        <td scope="row"><a href="/priceList/{{i.url_4.id}}">{{i.url4}}</a><br>{{i.url_4.price}} руб.</td>
-        <td scope="row">{{i.my_url}}</td>
+        <td scope="row">{% if i.recommend_price %}{{i.recommend_price}}{% endif %}</td>
+        <td scope="row">{% if i.url1 %}<a href="/priceList/{{i.url_1.id}}/1">{{i.url1}}</a>{% endif %}<br>{% if i.url_1 %}{{i.url_1.price}} руб.{% endif %}</td>
+        <td scope="row">{% if i.url2 %}<a href="/priceList/{{i.url_2.id}}/1">{{i.url2}}</a>{% endif %}<br>{% if i.url_2 %}{{i.url_2.price}} руб.{% endif %}</td>
+        <td scope="row">{% if i.url3 %}<a href="/priceList/{{i.url_3.id}}/1">{{i.url3}}</a>{% endif %}<br>{% if i.url_3 %}{{i.url_3.price}} руб.{% endif %}</td>
+        <td scope="row">{% if i.url4 %}<a href="/priceList/{{i.url_4.id}}/1">{{i.url4}}</a>{% endif %}<br>{% if i.url_4 %}{{i.url_4.price}} руб.{% endif %}</td>
+        <td scope="row">{% if i.my_url %}<a href="{{i.my_url}}">{{i.my_url}}</a>{% endif %}</td>
     </tr>
   {% endfor %}
   </tbody>

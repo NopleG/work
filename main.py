@@ -54,7 +54,7 @@ class Goods(db.Model):
 @app.route("/view/<int:page>", methods=["GET", "POST"])
 def view(page=1):
 
-    info = Listing.query.paginate(page=page, per_page=3)
+    info = Listing.query.order_by(Listing.id).paginate(page=page, per_page=3)
     return render_template('view.html', info=info)
 
 
@@ -80,11 +80,13 @@ def login():
 def addNote():
     if request.method == "POST":
         name = request.form['name']
+        recommend_price = request.form['rp']
         url1 = request.form['url1']
         url2 = request.form['url2']
         url3 = request.form['url3']
         url4 = request.form['url4']
-        data = Listing(name=name, url1=url1, url2=url2, url3=url3, url4=url4)
+        my_url = request.form['my_url']
+        data = Listing(name=name, recommend_price=recommend_price, url1=url1, url2=url2, url3=url3, url4=url4, my_url=my_url)
         db.session.add(data)
         db.session.commit()
         return render_template('addNote.html')
@@ -111,16 +113,13 @@ def editNote(id):
     else:
         return render_template('index.html')
 
-
-@app.route("/priceList/<int:id>/", methods=["GET", "POST"])
-def priceList(id):
+@app.route("/priceList", methods=["GET", "POST"])
+@app.route("/priceList/<int:id>/<int:page>", methods=["GET", "POST"])
+def priceList(id=1, page=1):
     if request.method == 'POST':
         pass
-    result = PriceList.query.filter(PriceList.good_id == id).order_by(desc(PriceList.created_on)).all()
+    result = PriceList.query.filter(PriceList.good_id == id).order_by(desc(PriceList.created_on)).paginate(page=page, per_page=10)
 
-    for i in result:
-        print(i.price)
-        print(i.created_on)
     return render_template('priceList.html', info=result, id=id)
 
 
